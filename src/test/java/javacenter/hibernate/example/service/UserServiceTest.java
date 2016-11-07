@@ -75,6 +75,11 @@ public class UserServiceTest {
         users.get(0).getPosts().size();
     }
     
+    @Test
+    public void shouldWork51() {
+        User user = userService.getUser(4);
+    }
+    
     @Test(expected = LazyInitializationException.class)
     public void shouldWork6() {
         List<User> users = userService.getAllUsers4();

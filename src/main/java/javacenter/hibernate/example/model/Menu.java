@@ -24,7 +24,7 @@ public class Menu {
     private String name;
     
     @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<Item> items = new HashSet<>();
 
     public String getName() {

@@ -39,13 +39,14 @@ public class MenuServiceTest {
     
     @Test
     public void shouldWork3() {
-        //доступные FETCH стратегии: SELECT, SUBSELECT
+        //доступные FETCH стратегии: SELECT, SUBSELECT (JOIN не имеет смысла при работе с диапазонами)
         List<Menu> menus = menuService.getAllMenus1();
     }
     
     @Test
     public void shouldWorkWithJoin() {
         //доступные FETCH стратегии: SELECT, JOIN
+        //SUBSELECT делает тоже самое, что и SELECT
         Menu menu = menuService.getMenu(1);
     }
 }

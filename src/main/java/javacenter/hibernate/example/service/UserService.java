@@ -103,11 +103,24 @@ public class UserService {
     public List<User> getAllUsers3() {
         List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
         
+        //Доступные FETCH стратегии: SELECT, SUBSELECT (JOIN не имеет смысла при работе с диапазонами)
         for (User u : users) {
             u.getPosts().size();
         }
         
         return users;
+    }
+    
+    @Transactional(readOnly = true)
+    public User getUser(int id) {
+        User u = em.find(User.class, id);
+
+        //Доступные FETCH стратегии: SELECT 
+        //(SUBSELECT ведет себя также, как и SELECT) 
+        //(JOIN отменяет ленивость)
+        u.getPosts().size();
+        
+        return u;
     }
     
     /**

@@ -10,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -23,7 +20,6 @@ public class User {
     private String name;
     
     @OneToMany(mappedBy = "user")
-    @Fetch(FetchMode.SELECT)
     private Set<Post> posts = new HashSet<>();
 
     public String getName() {
