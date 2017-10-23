@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javacenter.hibernate.example.config.DbConfig;
 import javacenter.hibernate.example.model.Post;
@@ -46,6 +47,18 @@ public class UserServiceTest {
         post.setUser(user);
         
         postService.persist(post);
+    }
+    
+    @Test
+    @Transactional
+    public void shouldFlush() {
+        List<User> users = userService.getAllUsers1();
+        
+        User u = users.get(0);
+        
+        u.setName(UUID.randomUUID().toString());
+        
+        userService.nativeSelect();
     }
     
     @Test(expected = LazyInitializationException.class)
@@ -87,5 +100,10 @@ public class UserServiceTest {
         Assert.assertTrue(!users.isEmpty());
         
         users.get(0).getPosts().size();
+    }
+    
+    @Test
+    public void shouldGetUsersWithPosts() {
+        userService.getUsersWithPosts();
     }
 }

@@ -32,6 +32,16 @@ public class UserService {
         return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
     
+    @Transactional(readOnly = true)
+    public void nativeUpdate() {
+//        em.createNativeQuery("UPDATE userconnection u SET u.userId = '1'").executeUpdate();
+    }
+    
+    @Transactional(readOnly = true)
+    public void nativeSelect() {
+        em.createNativeQuery("SELECT * FROM userconnection u where u.userId = 1").getResultList();
+    }
+    
     /**
     select
         user0_.id as id1_1_0_,
@@ -103,7 +113,7 @@ public class UserService {
     public List<User> getAllUsers3() {
         List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
         
-        //Доступные FETCH стратегии: SELECT, SUBSELECT (JOIN не имеет смысла при работе с диапазонами)
+        //Доступные FETCH стратегии: SELECT, SUBSELECT
         for (User u : users) {
             u.getPosts().size();
         }
@@ -138,5 +148,10 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<User> getAllUsers4() {
         return em.createQuery("SELECT u FROM User u JOIN u.posts", User.class).getResultList();
+    }
+    
+    @Transactional(readOnly = true)
+    public List<User> getUsersWithPosts() {
+        return em.createQuery("SELECT u FROM User u WHERE size(u.posts) > 1", User.class).getResultList();
     }
 }
